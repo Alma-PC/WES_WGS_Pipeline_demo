@@ -68,10 +68,10 @@ flowchart LR
 ### QC report
 
 All QC outputs (FastQC, fastp, MarkDuplicates, samtools, bcftools, VEP) are collected into
-a single MultiQC report. The screenshot below shows the top of the report produced by the
-demo run:
+a single MultiQC report. Click the preview to see the
+[full-size screenshot](docs/img/multiqc_report.png) of the demo run's report:
 
-![MultiQC report for the demo run: general statistics table and variant substitution types](docs/img/multiqc_report.png)
+<a href="docs/img/multiqc_report.png"><img src="docs/img/multiqc_report.png" width="420" alt="MultiQC report for the demo run: general statistics table and variant substitution types"></a>
 
 `config/multiqc_config.yaml` hides local file paths and run timestamps, so the report can be
 shared without exposing details about the machine.
