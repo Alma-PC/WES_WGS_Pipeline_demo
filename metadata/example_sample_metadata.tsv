@@ -1,0 +1,6 @@
+# SYNTHETIC EXAMPLE METADATA - every value below is invented to demonstrate format harmonization.
+# It does not describe the real HG001/NA12878 sample. DEMO-002 and demo_003 are fictitious and have no data.
+Sample ID	Seq Platform	library_prep	Collection Date	DNA input	Batch	Notes
+hg001 	illumina hiseq 2500	TruSeq PCR-free	2014/01/15	50 ng	B1	demo row linked to pipeline output
+DEMO-002	Illumina	truseq pcr free	15-02-2014	0.1 ug	b1	fictitious sample, no sequencing data
+demo_003	ILLUMINA NovaSeq	Nextera Flex	2014-03-01	NA	B2	fictitious sample, no sequencing data

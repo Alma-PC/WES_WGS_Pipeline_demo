@@ -1,0 +1,46 @@
+# =============================================================================
+# WES/WGS demo pipeline: FASTQ -> QC -> alignment -> duplicates -> variants
+#                        -> VEP annotation -> analysis-ready table
+# Technical demonstration only. Not for clinical or research conclusions.
+# =============================================================================
+from snakemake.utils import min_version
+import pandas as pd
+
+min_version("8.0")
+
+
+configfile: "config/config.yaml"
+
+
+SAMPLES = (
+    pd.read_csv(config["samples"], sep="\t", dtype=str, comment="#")
+    .set_index("sample_id", drop=False)
+)
+
+OUT = config["outdir"]
+LOGS = config["logdir"]
+THREADS = int(config["threads"])
+
+REF = config["reference"]["fasta"]
+REF_DICT = REF.rsplit(".", 1)[0] + ".dict"
+GFF = config["annotation"]["gff3_sorted"]
+REGION = "{chrom}:{start}-{end}".format(**config["region"])
+
+
+wildcard_constraints:
+    sample="|".join(SAMPLES.index),
+
+
+include: "rules/reference.smk"
+include: "rules/qc.smk"
+include: "rules/align.smk"
+include: "rules/dedup.smk"
+include: "rules/call.smk"
+include: "rules/annotate.smk"
+include: "rules/table.smk"
+
+
+rule all:
+    input:
+        f"{OUT}/qc/multiqc/multiqc_report.html",
+        expand(f"{OUT}/tables/{{sample}}.variants.tsv", sample=SAMPLES.index),

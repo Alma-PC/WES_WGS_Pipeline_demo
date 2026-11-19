@@ -1,0 +1,7 @@
+# Isolated environment for Ensembl VEP (created automatically by `snakemake --use-conda`).
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - ensembl-vep=116.3
+  - htslib

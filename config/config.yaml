@@ -1,0 +1,64 @@
+# =============================================================================
+# WES/WGS demo pipeline - configuration
+# All paths are relative to the repository root (where you run `snakemake`).
+# =============================================================================
+
+# Sample sheet: sample_id <TAB> fq1 <TAB> fq2
+samples: config/samples.tsv
+
+# Output folders (all git-ignored)
+outdir: results
+logdir: logs
+
+# Default number of threads for multi-threaded steps (keep <= your CPU cores)
+threads: 4
+
+# -----------------------------------------------------------------------------
+# Reference genome and annotation (downloaded by scripts/download_data.sh)
+# Ensembl GRCh38, chromosome 20 only -> contig name is "20" (no "chr" prefix)
+# -----------------------------------------------------------------------------
+ensembl_release: 116
+
+reference:
+  fasta_gz: resources/reference/Homo_sapiens.GRCh38.dna.chromosome.20.fa.gz
+  fasta: resources/reference/Homo_sapiens.GRCh38.dna.chromosome.20.fa
+
+annotation:
+  gff3_gz: resources/annotation/Homo_sapiens.GRCh38.116.chromosome.20.gff3.gz
+  gff3_sorted: resources/annotation/Homo_sapiens.GRCh38.116.chromosome.20.sorted.gff3.gz
+
+# -----------------------------------------------------------------------------
+# Target region (GRCh38, Ensembl naming). Reads are extracted from this window
+# and variant calling is restricted to it. Must match scripts/download_data.sh.
+# -----------------------------------------------------------------------------
+region:
+  chrom: "20"
+  start: 33000000
+  end: 33500000
+
+# -----------------------------------------------------------------------------
+# Tool parameters
+# -----------------------------------------------------------------------------
+fastp:
+  extra: "--detect_adapter_for_pe --qualified_quality_phred 15 --length_required 50"
+
+samtools:
+  sort_mem_per_thread: "512M"
+
+gatk:
+  java_opts: "-Xmx3g"
+  haplotypecaller_extra: ""
+  # Illustrative hard filters (GATK generic recommendations). Demo only - not tuned.
+  hard_filters:
+    - name: "QD2"
+      expression: "QD < 2.0"
+    - name: "FS60"
+      expression: "FS > 60.0"
+    - name: "MQ40"
+      expression: "MQ < 40.0"
+    - name: "QUAL30"
+      expression: "QUAL < 30.0"
+
+vep:
+  # VEP runs offline against the Ensembl GFF3 + FASTA (no 20+ GB cache needed).
+  extra: "--symbol --hgvs --biotype --numbers --variant_class --allele_number --flag_pick_allele --no_escape"

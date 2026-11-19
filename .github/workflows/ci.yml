@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Snakemake
+        run: pip install "snakemake>=8" pandas
+
+      - name: Unit test - VEP VCF to table
+        run: |
+          python scripts/vep_to_table.py --vcf tests/data/mini.vep.vcf --sample HG001 --out /tmp/mini.tsv
+          test "$(tail -n +2 /tmp/mini.tsv | wc -l)" -eq 5
+          grep -q "ENSP1:p.Lys34Glu" /tmp/mini.tsv
+
+      - name: Workflow dry-run (placeholder inputs)
+        run: |
+          mkdir -p data/raw resources/reference resources/annotation
+          touch data/raw/HG001_R1.fastq.gz data/raw/HG001_R2.fastq.gz \
+                resources/reference/Homo_sapiens.GRCh38.dna.chromosome.20.fa.gz \
+                resources/annotation/Homo_sapiens.GRCh38.116.chromosome.20.gff3.gz
+          snakemake -n --cores 2
+
+      - name: Shell script syntax
+        run: bash -n scripts/download_data.sh

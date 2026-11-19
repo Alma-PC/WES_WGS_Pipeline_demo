@@ -1,0 +1,51 @@
+# ---- Large data, references and pipeline outputs (never commit) ----
+data/raw/
+data/MANIFEST.txt
+resources/
+results/
+logs/
+benchmarks/
+.snakemake/
+
+# Genomic file types, wherever they end up
+*.fastq
+*.fastq.gz
+*.fq
+*.fq.gz
+*.bam
+*.bai
+*.cram
+*.crai
+*.sam
+*.vcf
+*.vcf.gz
+*.tbi
+*.csi
+*.fa
+*.fa.gz
+*.fasta
+*.fasta.gz
+*.fai
+*.dict
+*.gff3.gz
+*.0123
+*.amb
+*.ann
+*.bwt.2bit.64
+*.pac
+*.part
+
+# ---- Python / Jupyter ----
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+
+# ---- OS / editors ----
+.DS_Store
+.vscode/
+.idea/
+*.swp
+
+# ---- Small test fixtures are allowed ----
+!tests/data/*.vcf
