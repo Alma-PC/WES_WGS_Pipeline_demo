@@ -212,6 +212,26 @@ data/raw/  resources/  results/  logs/  .snakemake/
 | `exon, intron, hgvsc, hgvsp` | Position within the transcript and HGVS notation |
 | `variant_class, pick` | SNV/indel class; `pick == 1` marks the one consequence VEP selects per ALT allele (`--flag_pick_allele`) |
 
+## Integration notebook
+
+[`notebooks/01_integrate_variants_metadata.ipynb`](notebooks/01_integrate_variants_metadata.ipynb)
+joins the variant table with a deliberately messy, synthetic metadata sheet. It covers data
+engineering steps only:
+
+1. **Load with explicit types.** Every column is read as text and only the numeric ones are
+   converted, so pandas cannot misread values such as `pick` or `exon = 3/12`.
+2. **Harmonize the variants.** Adds a stable `variant_id` (`chrom-pos-ref-alt`), a `chr`-prefixed
+   chromosome name, `zygosity`, `vaf` and a primary consequence, and gives a one-row-per-ALT view.
+3. **Clean the metadata.** Converts column names to snake_case, normalizes sample IDs
+   (`hg001 ` → `HG001`), converts mixed date formats to ISO, maps free text to controlled
+   vocabularies and converts DNA amounts (`0.1 ug` → `100 ng`).
+4. **Validated join.** `merge(validate="many_to_one", indicator=True)` fails on duplicated
+   sample IDs and reports samples that have metadata but no data.
+5. **Format checks.** Reports types, missing values and category counts, then writes
+   `results/integrated/variants_with_metadata.tsv`.
+
+The notebook is committed with its outputs, so it can be read on GitHub without running it.
+
 ## Data sources
 
 | Data | Source | Licence |
