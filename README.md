@@ -14,6 +14,15 @@ metadata in a Python notebook. It uses public data only and runs on a laptop in 
 > biological, clinical or association conclusions. Filters and parameters are illustrative,
 > not tuned or validated.
 
+## Why this exists
+
+Real genomics projects rarely use data from a single source. Exomes and genomes,
+samples sequenced at different times, and public cohorts on different reference builds
+all have to end up in one table. Most of what goes wrong there is not biology but
+bookkeeping: mismatched builds, inconsistent formats, ambiguous sample IDs.
+This repository shows how I keep that path reproducible, from raw FASTQ to an
+integrated, traceable variant table.
+
 ## Objective
 
 Show, end to end, the engineering side of a WES/WGS analysis:
