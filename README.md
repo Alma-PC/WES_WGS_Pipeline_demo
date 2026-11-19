@@ -65,6 +65,17 @@ flowchart LR
 | QC summary | MultiQC | `results/qc/multiqc/multiqc_report.html` |
 | Integration | Jupyter + pandas | `results/integrated/variants_with_metadata.tsv` |
 
+### QC report
+
+All QC outputs (FastQC, fastp, MarkDuplicates, samtools, bcftools, VEP) are collected into
+a single MultiQC report. The screenshot below shows the top of the report produced by the
+demo run:
+
+![MultiQC report for the demo run: general statistics table and variant substitution types](docs/img/multiqc_report.png)
+
+`config/multiqc_config.yaml` hides local file paths and run timestamps, so the report can be
+shared without exposing details about the machine.
+
 ## Requirements
 
 - macOS or Linux (x86_64). On Apple Silicon, use Docker with `--platform linux/amd64` or a Rosetta conda install.
@@ -157,6 +168,7 @@ WES_WGS_Pipeline_demo/
 ├── Makefile                     # convenience targets (make help)
 ├── config/
 │   ├── config.yaml              # paths and parameters
+│   ├── multiqc_config.yaml      # report title, hides local paths
 │   └── samples.tsv              # sample sheet
 ├── workflow/
 │   ├── Snakefile                # entry point, target rule `all`
@@ -177,7 +189,8 @@ WES_WGS_Pipeline_demo/
 ├── metadata/
 │   └── example_sample_metadata.tsv   # synthetic, intentionally messy
 ├── docs/
-│   └── DATA_SOURCES.md          # origin, licences and citations
+│   ├── DATA_SOURCES.md          # origin, licences and citations
+│   └── img/multiqc_report.png   # screenshot used in this README
 ├── tests/data/mini.vep.vcf      # tiny fixture used by CI
 └── .github/workflows/ci.yml     # unit test + Snakemake dry-run
 

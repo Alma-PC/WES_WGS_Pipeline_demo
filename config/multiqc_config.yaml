@@ -1,0 +1,13 @@
+# MultiQC settings for the demo report
+title: "WES/WGS demo: HG001 chr20 window"
+subtitle: "Technical demonstration - no biological conclusions"
+
+# Keep the report portable and free of local paths/usernames when shared
+show_analysis_paths: false
+show_analysis_time: false
+
+# Merge per-step file names into one sample name (e.g. HG001.filtered -> HG001)
+extra_fn_clean_exts:
+  - ".filtered"
+  - ".dedup"
+  - ".fastp"

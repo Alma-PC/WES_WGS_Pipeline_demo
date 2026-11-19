@@ -35,13 +35,16 @@ rule fastp:
 
 rule multiqc:
     input:
-        expand(f"{OUT}/qc/fastqc/{{sample}}", sample=SAMPLES.index),
-        expand(f"{OUT}/qc/fastp/{{sample}}.fastp.json", sample=SAMPLES.index),
-        expand(f"{OUT}/qc/markdup/{{sample}}.metrics.txt", sample=SAMPLES.index),
-        expand(f"{OUT}/qc/samtools/{{sample}}.stats.txt", sample=SAMPLES.index),
-        expand(f"{OUT}/qc/samtools/{{sample}}.flagstat.txt", sample=SAMPLES.index),
-        expand(f"{OUT}/variants/{{sample}}.bcftools_stats.txt", sample=SAMPLES.index),
-        expand(f"{OUT}/annotation/{{sample}}.vep_summary.html", sample=SAMPLES.index),
+        reports=(
+            expand(f"{OUT}/qc/fastqc/{{sample}}", sample=SAMPLES.index)
+            + expand(f"{OUT}/qc/fastp/{{sample}}.fastp.json", sample=SAMPLES.index)
+            + expand(f"{OUT}/qc/markdup/{{sample}}.metrics.txt", sample=SAMPLES.index)
+            + expand(f"{OUT}/qc/samtools/{{sample}}.stats.txt", sample=SAMPLES.index)
+            + expand(f"{OUT}/qc/samtools/{{sample}}.flagstat.txt", sample=SAMPLES.index)
+            + expand(f"{OUT}/variants/{{sample}}.bcftools_stats.txt", sample=SAMPLES.index)
+            + expand(f"{OUT}/annotation/{{sample}}.vep_summary.html", sample=SAMPLES.index)
+        ),
+        config="config/multiqc_config.yaml",
     output:
         f"{OUT}/qc/multiqc/multiqc_report.html",
     params:
@@ -49,4 +52,5 @@ rule multiqc:
     log:
         f"{LOGS}/multiqc/multiqc.log",
     shell:
-        "multiqc --force --outdir {params.outdir} --filename multiqc_report.html {input} > {log} 2>&1"
+        "multiqc --force --config {input.config} --outdir {params.outdir} "
+        "--filename multiqc_report.html {input.reports} > {log} 2>&1"
