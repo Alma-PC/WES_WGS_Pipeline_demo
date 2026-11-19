@@ -62,8 +62,8 @@ flowchart LR
 - About 8 GB RAM, 4 CPU cores and **at least 7 GB of free disk space**.
 - An internet connection for the one-time data download (~30 MB on disk) and the conda packages.
 - **One of:**
-  - [Miniforge / Mambaforge](https://github.com/conda-forge/miniforge) (recommended) or conda ≥ 23
-  - [Docker](https://docs.docker.com/get-docker/)
+  - [Miniforge / Mambaforge](https://github.com/conda-forge/miniforge) (recommended, tested) or conda ≥ 23
+  - [Docker](https://docs.docker.com/get-docker/) (untested, see below)
 
 Measured on an Intel MacBook (x86_64, 8 GB RAM, 4 cores used) with a home internet connection:
 
@@ -103,7 +103,12 @@ jupyter lab notebooks/01_integrate_variants_metadata.ipynb
 
 The same steps are available through `make`: run `make help` to list them.
 
-## Quick start (Docker)
+## Quick start (Docker, untested)
+
+> [!WARNING]
+> **The Docker setup has not been tested yet.** The `Dockerfile` installs the same pinned
+> `environment.yml` that was validated with conda, but the image has not been built or run.
+> The conda route above is the tested way to run this demo.
 
 ```bash
 docker build -t wes-wgs-demo .
@@ -139,7 +144,7 @@ WES_WGS_Pipeline_demo/
 ├── README.md
 ├── LICENSE                      # MIT
 ├── environment.yml              # main conda environment (all tools except VEP)
-├── Dockerfile                   # same environment in a container
+├── Dockerfile                   # same environment in a container (untested)
 ├── Makefile                     # convenience targets (make help)
 ├── config/
 │   ├── config.yaml              # paths and parameters

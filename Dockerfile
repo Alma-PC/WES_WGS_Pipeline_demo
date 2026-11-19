@@ -1,3 +1,4 @@
+# NOTE: untested - not yet built or run. The conda route in the README is the validated one.
 # Container with the main environment (environment.yml). The VEP environment
 # (workflow/envs/vep.yml) is built by Snakemake on first run via --use-conda and
 # cached in .snakemake/conda/ inside the mounted project folder.
