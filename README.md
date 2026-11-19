@@ -1,6 +1,6 @@
 # WES/WGS Pipeline Demo: FASTQ to annotated variants
 
-[![CI](https://github.com/OWNER/WES_WGS_Pipeline_demo/actions/workflows/ci.yml/badge.svg)](https://github.com/OWNER/WES_WGS_Pipeline_demo/actions/workflows/ci.yml)
+[![CI](https://github.com/alma-pc/WES_WGS_Pipeline_demo/actions/workflows/ci.yml/badge.svg)](https://github.com/alma-pc/WES_WGS_Pipeline_demo/actions/workflows/ci.yml)
 ![Snakemake](https://img.shields.io/badge/snakemake-%E2%89%A58.0-brightgreen)
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
 
@@ -81,7 +81,7 @@ Disk use is about 6 GB for the two conda environments (main env + VEP env in `.s
 
 ```bash
 # 1. Clone
-git clone https://github.com/OWNER/WES_WGS_Pipeline_demo.git
+git clone https://github.com/alma-pc/WES_WGS_Pipeline_demo.git
 cd WES_WGS_Pipeline_demo
 
 # 2. Create and activate the environment
